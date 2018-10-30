@@ -1,0 +1,44 @@
+<html>
+
+<head>
+</head>
+
+<body>
+    <script type="text/javascript">
+        var ws = new WebSocket("ws://localhost:8080/echo");
+        console.log(ws);
+        ws.onopen = function() {
+            ws.send("1234567890");
+            alert("sending...");
+        };
+
+        ws.onmessage = function(evt) {
+            var received_msg = evt.data;
+            alert("received..." + received_msg);
+            console.log(received_msg, JSON.parse(received_msg));
+            ws.onclose();
+
+        };
+
+        ws.onclose = function() {
+            // 关闭 websocket
+            setTimeout(function(){ 
+
+                alert("1"); 
+
+                setTimeout(function(){ 
+
+                    alert("2"); 
+                    setTimeout(function(){ 
+                            alert("3"); 
+                
+                    }, 3000);
+                }, 3000);
+
+            }, 3000);
+            alert("close websocket!");
+        };
+    </script>
+</body>
+
+</html>
